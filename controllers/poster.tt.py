@@ -1,6 +1,3 @@
-"""
-Файл для выгрузки видео в тикток
-"""
 import os
 from tiktok_uploader.upload import upload_videos
 from tiktok_uploader.auth import AuthBackend
@@ -25,8 +22,8 @@ videos = [
 
 cookies_path = os.path.join(os.getcwd(), 'config', 'cookies.txt')
 auth = AuthBackend(cookies=cookies_path)
-failed_videos = upload_videos(videos=videos, auth=auth, proxy=proxy)
+
+failed_videos = upload_videos(videos=videos, auth=auth, proxy=proxy, headless=True)
 
 for video in failed_videos:
-    print(f'{video['video']} with description "{video['description']}" failed')
-
+    print(f"{video['video']} with description '{video['description']}' failed")
