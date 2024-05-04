@@ -20,7 +20,11 @@ pip install -r requirements.txt
 
 Для использования скрипта необходимо пройти авторизацию и подтверждение в [Google Cloud Console](https://console.cloud.google.com/) и заполнить `client_secrets.json` вашими данными в папке `config`.
 
+<<<<<<< HEAD
 Чтобы запустить скрипт, напишите следующую команду в консоли: `python poster.yt.py --file <путь к файлу>`. При первом запуске скрипта необходимо авторизоваться через Google OAuth2 и выбрать аккаунт. При следующих запусках это не потребуется. Данные для входа сохранятся в новый файл под названием [poster.yt.py-oauth2.json](controllers%2Fposter.yt.py-oauth2.json)
+=======
+Чтобы запустить скрипт, напишите следующую команду в консоли: `python .\controllers\poster.yt.py --file <путь к файлу>`. При первом запуске скрипта необходимо авторизоваться через Google OAuth2 и выбрать аккаунт. При следующих запусках это не потребуется. Данные для входа сохранятся в новый файл под названием [poster.yt.py-oauth2.json](controllers%2Fposter.yt.py-oauth2.json)
+>>>>>>> 69dc20d (add tg)
 
 ## Использование Автопостера для TikTok
 Для использования Автопостера для TikTok необходимо заполнить cookies.txt. Для этого нужно получить данные для заполнения при авторизации аккаунта TikTok. Можно использовать [расширение для Chrome](https://chromewebstore.google.com/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc), чтобы упростить этот процесс. Необходимо скачать файл в формате JSON и заменить им содержимое cookies.txt в папке config. Все данные собирутся при первом разе в файл [temp_proxy_auth_extension.zip](controllers%2Ftemp_proxy_auth_extension.zip)

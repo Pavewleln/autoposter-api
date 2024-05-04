@@ -1,3 +1,7 @@
+"""
+Файл для выгрузки видео в тикток
+"""
+import os
 from tiktok_uploader.upload import upload_videos
 from tiktok_uploader.auth import AuthBackend
 
@@ -14,13 +18,15 @@ proxy = {
 
 videos = [
     {
-        'video': '../video/video1.mp4',
+        'video': 'video/video1.mp4',
         'description': 'Video 1 is about ...'
     }
 ]
 
-auth = AuthBackend(cookies='../config/cookies.txt')
+cookies_path = os.path.join(os.getcwd(), 'config', 'cookies.txt')
+auth = AuthBackend(cookies=cookies_path)
 failed_videos = upload_videos(videos=videos, auth=auth, proxy=proxy)
 
 for video in failed_videos:
     print(f'{video['video']} with description "{video['description']}" failed')
+
