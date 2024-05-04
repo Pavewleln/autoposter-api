@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 import requests
+=======
+"""
+Бот для выгрузки видео в инстаграм
+"""
+>>>>>>> 69dc20d (add tg)
 from instabot import Bot
 
 # Прокси-настройки
@@ -13,9 +19,18 @@ proxies = {
 }
 
 bot = Bot()
+<<<<<<< HEAD
 bot.login(username='', password='')
 
 video_path = '/video.mp4'
 caption = 'test'
 
 bot.upload_video(video_path, caption=caption, options={'proxy': proxies})
+=======
+bot.login(username='sh1ryudesu', password='dHvfpmWzMA9UUfUtg8w7')
+
+video_path = '/video.mp4'
+description = 'test'
+
+bot.upload_video(video_path, description=description, options={'proxy': proxies})
+>>>>>>> 69dc20d (add tg)
