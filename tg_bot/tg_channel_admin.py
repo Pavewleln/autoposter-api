@@ -41,20 +41,6 @@ async def start():
     finally:
         await bot.session.close()
 
-    bot = Bot(token=API_TOKEN)
-    dp = Dispatcher(bot=bot, loop=asyncio.new_event_loop())
-    @dp.message(F.text, Command("send"))
-    async def send_message_to_all_users(message: types.Message):
-        conn = sqlite3.connect('users.db')
-        c = conn.cursor()
-        c.execute("SELECT user_id FROM users")
-        user_ids = c.fetchall()
-        conn.close()
-        text = message.text.replace("/send", "")
-
-        for user_id in user_ids:
-            await message.bot.send_message(chat_id=user_id[0], text=text)
-
 if __name__ == '__main__':
     with contextlib.suppress(KeyboardInterrupt, SystemExit):
         asyncio.run(start())
