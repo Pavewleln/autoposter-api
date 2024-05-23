@@ -15,7 +15,7 @@ channel_id = -1002134206250
 """
     Принятие заявки и написание в лс пользователю
 """
-async def approve_request(chat_join: ChatJoinRequest, bot: Bot):
+async def approve_request(chat_join: ChatJoinRequest):
     user_id = chat_join.from_user.id
     msg = "Привет, ваш запрос на вступление одобрен!"
     await bot.send_message(chat_id=user_id, text=msg)
@@ -30,9 +30,23 @@ async def approve_request(chat_join: ChatJoinRequest, bot: Bot):
 async def start():
     logging.basicConfig(level=logging.DEBUG,
                         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    bot: Bot = Bot(token=API_TOKEN)
+    bot = Bot(token=API_TOKEN)
     dp = Dispatcher()
+
+    # Регистрация обработчика для принятия заявок на вступление в чат
     dp.chat_join_request.register(approve_request, F.chat.id == channel_id)
+
+    @dp.message(F.text, Command("send"))
+    async def send_message_to_all_users(message: types.Message):
+        conn = sqlite3.connect('users.db')
+        c = conn.cursor()
+        c.execute("SELECT user_id FROM users")
+        user_ids = c.fetchall()
+        conn.close()
+        text = message.text.replace("/send", "")
+
+        for user_id in user_ids:
+            await bot.send_message(chat_id=user_id[0], text=text)
 
     try:
         await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
