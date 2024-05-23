@@ -19,7 +19,7 @@ RETRIABLE_EXCEPTIONS = (httplib2.HttpLib2Error, IOError)
 
 RETRIABLE_STATUS_CODES = [500, 502, 503, 504]
 
-CLIENT_SECRETS_FILE = "./config/client_secrets.json"
+CLIENT_SECRETS_FILE = "../config/client_secrets.json"
 
 YOUTUBE_UPLOAD_SCOPE = "https://www.googleapis.com/auth/youtube.upload"
 YOUTUBE_API_SERVICE_NAME = "youtube"

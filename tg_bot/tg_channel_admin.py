@@ -33,6 +33,14 @@ async def start():
     bot: Bot = Bot(token=API_TOKEN)
     dp = Dispatcher()
     dp.chat_join_request.register(approve_request, F.chat.id == channel_id)
+
+    try:
+        await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
+    except Exception as ex:
+        logging.error(f'{ex}', exc_info=True)
+    finally:
+        await bot.session.close()
+
     bot = Bot(token=API_TOKEN)
     dp = Dispatcher(bot=bot, loop=asyncio.new_event_loop())
     @dp.message(F.text, Command("send"))
@@ -42,18 +50,10 @@ async def start():
         c.execute("SELECT user_id FROM users")
         user_ids = c.fetchall()
         conn.close()
-        text = message.text.replace("/send", "") # удаляем команду /send из сообщения
+        text = message.text.replace("/send", "")
 
         for user_id in user_ids:
             await message.bot.send_message(chat_id=user_id[0], text=text)
-
-    try:
-        await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
-    except Exception as ex:
-        logging.error(f'{ex}', exc_info=True)
-    finally:
-        await bot.session.close()
-
 
 if __name__ == '__main__':
     with contextlib.suppress(KeyboardInterrupt, SystemExit):
