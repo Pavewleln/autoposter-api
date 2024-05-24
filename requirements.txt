@@ -3,4 +3,3 @@ oauth2client
 google-api-python-client
 tiktok-uploader
 aiogram
-sqlite3
