@@ -7,7 +7,7 @@ from aiogram.filters.command import Command
 from aiogram.types import ChatJoinRequest
 
 API_TOKEN = '7159553101:AAHOpPtyFy7y-rDVHLSmc4e1G0LpYsRPa8Q'
-admin_id = 1042652647
+admin_ids = [1042652633, 1776053932]
 channel_id = -1002134206250
 
 logging.basicConfig(level=logging.INFO)
@@ -33,15 +33,18 @@ async def cmd_start(message: types.Message):
 
 @dp.message(Command("send"))
 async def send_message_to_all_users(message: types.Message):
-    conn = sqlite3.connect('users.db')
-    c = conn.cursor()
-    c.execute("SELECT user_id FROM users")
-    user_ids = c.fetchall()
-    conn.close()
-    text = message.text.replace("/send", "")
+    if message.from_user.id in admin_ids:
+        conn = sqlite3.connect('users.db')
+        c = conn.cursor()
+        c.execute("SELECT user_id FROM users")
+        user_ids = c.fetchall()
+        conn.close()
+        text = message.text.replace("/send", "")
 
-    for user_id in user_ids:
-        await bot.send_message(chat_id=user_id[0], text=text)
+        for user_id in user_ids:
+            await bot.send_message(chat_id=user_id[0], text=text)
+    else:
+        await message.answer("У вас нет прав для выполнения этой команды.")
 
 async def main():
     await dp.start_polling(bot)
